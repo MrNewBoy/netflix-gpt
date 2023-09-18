@@ -2,7 +2,9 @@
 
 - created a project using create-react-app package(CRA)
 - installed tailwind css
-
+- header
+- Login form
+- signup form
 # features (livewire)
 -login/signup
     -form for signup/sign up form 
