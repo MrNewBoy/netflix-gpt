@@ -2,9 +2,12 @@
 
 - created a project using create-react-app package(CRA)
 - installed tailwind css
+- configured routing
 - header
 - Login form
 - signup form
+- form validation
+- useref hook
 # features (livewire)
 -login/signup
     -form for signup/sign up form 
