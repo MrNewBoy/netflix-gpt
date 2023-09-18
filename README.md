@@ -1,7 +1,7 @@
 # netflix-gpt
 
-created a project using create-react-app package(CRA)
-installed tailwind css
+- created a project using create-react-app package(CRA)
+- installed tailwind css
 
 # features (livewire)
 -login/signup
