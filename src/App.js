@@ -1,10 +1,6 @@
 
 function App() {
-  return (
-    <div >
-      Netflix GPT 
-    </div>
-  );
+  return <div className="text-3xl font-bold">Netflix GPT</div>;
 }
 
 export default App;
