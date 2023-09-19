@@ -8,6 +8,11 @@
 - signup form
 - form validation
 - useref hook
+- firebase setup
+- deployed the webpage to prod
+- implemented signup and signin logic
+- created redux store with userslice
+
 # features (livewire)
 -login/signup
     -form for signup/sign up form 

@@ -1,12 +1,18 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [signUp, setSignUp] = useState(false);
-  const [inputError, setInputError] = useState({
+  const [error, setError] = useState({
     email: null,
     password: null,
+    auth: null,
   });
 
   const fullname = useRef(null);
@@ -16,31 +22,74 @@ const Login = () => {
   const handleButtonClick = (e) => {
     e.preventDefault();
 
-    const isValid = checkValidData(email.current.value, password.current.value);
+    const isValid =
+      signUp && checkValidData(email.current.value, password.current.value);
 
     if ("Email ID is not valid" === isValid) {
-      setInputError({ ...inputError, email: isValid });
+      setError({ ...error, email: isValid });
     } else if ("Password not valid" === isValid) {
-      setInputError({ ...inputError, password: isValid });
+      setError({ ...error, password: isValid });
     } else if (isValid === null) {
-      setInputError({ email: null, password: null });
+      setError({ email: null, password: null });
+    }
+
+    if (isValid) return;
+    if (signUp) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+          console.log(errorCode, errorMessage, "fromSignup");
+          setError({ ...error, auth: errorMessage + "-" + errorCode });
+        });
+    } else {
+      //sign in logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage, "from Signin");
+          setError({ ...error, auth: errorMessage + "-" + errorCode });
+        });
     }
   };
 
   return (
-    <div className="font-poppins ">
+    <div className="font-poppins">
       <Header />
-      <div className="absolute  ">
+      <div className="relative bg-black h-[100vh]">
         <img
-          className=""
+          className="hidden md:block md:bg-contain"
           src="https://assets.nflxext.com/ffe/siteui/vlv3/dc1cf82d-97c9-409f-b7c8-6ac1718946d6/14a8fe85-b6f4-4c06-8eaf-eccf3276d557/IN-en-20230911-popsignuptwoweeks-perspective_alpha_website_small.jpg"
           alt="bg-img"
         />
       </div>
-      <form className="absolute w-3/12 bg-black p-12 text-white mx-auto my-36 right-0 left-0 bg-opacity-80">
+      <form className="absolute w-full p-2 bg-black text-white mx-auto my-16 md:w-5/12 md:p-5  md:my-24 lg:my-36 lg:w-[440px] right-0 left-0 top-0 bg-opacity-80 ">
         {signUp && (
           <div
-            className="m-4 relative text-right hover:underline hover:cursor-pointer"
+            className="w-5/6 mt-4 relative text-right hover:underline hover:cursor-pointer"
             onClick={() => setSignUp(false)}
           >
             <svg
@@ -58,41 +107,49 @@ const Login = () => {
             Go Back
           </div>
         )}
-        <h1 className="text-3xl m-4 ">{signUp ? "Sign Up" : "Sign In"}</h1>
+        <h1 className="w-5/6 text-2xl lg:text-3xl md:m-4 ">
+          {signUp ? "Sign Up" : "Sign In"}
+        </h1>
         {signUp && (
           <input
-            className="p-3 w-full rounded-md bg-[#333] m-4 "
+            className="p-3 w-5/6 rounded-md bg-[#333] m-4 "
             type="text"
             placeholder="FullName"
             ref={fullname}
           />
         )}
         <input
-          className={`p-3 w-full rounded-md bg-[#333] m-4 ${
-            inputError.email && "border-b-2 border-b-[#e87c03]"
+          className={`p-3 w-5/6 rounded-md bg-[#333] m-4 ${
+            error.email && "border-b-2 border-b-[#e87c03]"
           }`}
           type="email"
           placeholder="Email Id"
           ref={email}
         />
-        <label className="p-3 m-4 text-[#e87c03]">{inputError.email}</label>
+        <span className={error.email && `p-3 m-4 text-[#e87c03]`}>
+          {error.email}
+        </span>
 
         <input
-          className={`p-3 w-full rounded-md bg-[#333] m-4 ${
-            inputError.password && "border-b-2 border-b-[#e87c03]"
+          className={`p-3 w-5/6 rounded-md bg-[#333] m-4 ${
+            error.password && "border-b-2 border-b-[#e87c03]"
           }`}
           type="password"
           placeholder="Password"
           ref={password}
         />
-        <label className="p-3 m-4 text-[#e87c03]">{inputError.password}</label>
+        <span className={error.password && `p-3 m-4 text-[#e87c03]`}>
+          {error.password}
+        </span>
         <button
-          className="bg-red-700 w-full p-4 rounded-lg text-xl m-4"
+          className="bg-red-700 w-5/6 p-4 rounded-lg text-xl m-4"
           onClick={handleButtonClick}
         >
           {signUp ? "Sign Up" : "Sign In"}
         </button>
-
+        {error.auth && (
+          <span className="p-3 m-4 text-red-700">{error.auth}</span>
+        )}
         {signUp ? (
           <></>
         ) : (
