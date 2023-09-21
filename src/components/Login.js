@@ -4,8 +4,13 @@ import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [signUp, setSignUp] = useState(false);
@@ -14,6 +19,8 @@ const Login = () => {
     password: null,
     auth: null,
   });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const fullname = useRef(null);
   const email = useRef(null);
@@ -34,7 +41,9 @@ const Login = () => {
     }
 
     if (isValid) return;
+
     if (signUp) {
+      //SignUp logic
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
@@ -43,9 +52,22 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-
-          // ...
+          console.log(user, "from signUp");
+          updateProfile(user, {
+            displayName: fullname.current.value,
+          })
+            .then(() => {
+              // Profile updated!
+              const { uid, email, displayName } = user;
+              dispatch(
+                addUser({ uid: uid, email: email, displayName: displayName })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -64,8 +86,8 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          // ...
+          console.log(user, "from Signin");
+          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -99,9 +121,9 @@ const Login = () => {
               className="w-6 h-6 absolute right-0 mr-[70px]"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M7.28 7.72a.75.75 0 010 1.06l-2.47 2.47H21a.75.75 0 010 1.5H4.81l2.47 2.47a.75.75 0 11-1.06 1.06l-3.75-3.75a.75.75 0 010-1.06l3.75-3.75a.75.75 0 011.06 0z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
             Go Back

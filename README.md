@@ -12,6 +12,8 @@
 - deployed the webpage to prod
 - implemented signup and signin logic
 - created redux store with userslice
+- implemented signout
+- implemented update profile api during signup
 
 # features (livewire)
 -login/signup
