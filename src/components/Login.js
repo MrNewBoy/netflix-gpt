@@ -4,7 +4,6 @@ import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut,
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
@@ -19,7 +18,6 @@ const Login = () => {
     password: null,
     auth: null,
   });
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const fullname = useRef(null);
@@ -52,7 +50,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user, "from signUp");
           updateProfile(user, {
             displayName: fullname.current.value,
           })
@@ -62,18 +59,15 @@ const Login = () => {
               dispatch(
                 addUser({ uid: uid, email: email, displayName: displayName })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
-              // ...
             });
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           // ..
-          console.log(errorCode, errorMessage, "fromSignup");
           setError({ ...error, auth: errorMessage + "-" + errorCode });
         });
     } else {
@@ -86,13 +80,10 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user, "from Signin");
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorCode, errorMessage, "from Signin");
           setError({ ...error, auth: errorMessage + "-" + errorCode });
         });
     }
