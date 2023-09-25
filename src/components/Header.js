@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { LOGO_URL } from "../utils/constants";
+import { LOGO_URL, PROFILE_IMG } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ const Header = ({ signout }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in
         const { uid, email, displayName } = user;
@@ -23,6 +23,7 @@ const Header = ({ signout }) => {
         navigate("/");
       }
     });
+    return () => unsubscribe();
   }, []);
 
   const handleSignOut = () => {
@@ -54,7 +55,7 @@ const Header = ({ signout }) => {
             <img
               className="w-8 inline"
               alt="profile-img"
-              src="https://occ-0-2610-3663.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABQ1dcB2h5seWi_VxDdEMQWUGVzz9MJg7qldqWlva91-QmXxsfD5lcg77M2S45VodVtyN1MI6mhFvGDT2yeNGNs8JcKStifM.png?r=145"
+              src={PROFILE_IMG}
             ></img>
             <svg
               xmlns="http://www.w3.org/2000/svg"

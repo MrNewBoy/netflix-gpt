@@ -1,15 +1,12 @@
-import React from "react";
-
-
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
-
+import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 const Browse = () => {
-  // const selector = useSelector((state) => state.user);
-  // const dispatch = useDispatch();
+  useNowPlayingMovies();
   return (
     <div>
       <Header signout />
-      <div className="">Browse</div>
+      <div className=""></div>
     </div>
   );
 };

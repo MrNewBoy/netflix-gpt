@@ -14,7 +14,9 @@
 - created redux store with userslice
 - implemented signout
 - implemented update profile api during signup
-
+- unsubscribed to onAuthChange 
+- register for TMDB and API get access token
+- created custom hook for calling the movies api and storeing it in store
 # features (livewire)
 -login/signup
     -form for signup/sign up form 
@@ -28,6 +30,6 @@
         - userprofile icon and settings
     - banner playing video with info
     - video reccomendations horizontal-list as per different category
-- GPT API 
+- GPT API (Test@1234)
     -search bar
     -movie suggestions
