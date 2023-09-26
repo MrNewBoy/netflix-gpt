@@ -38,11 +38,11 @@ const Header = ({ signout }) => {
   return (
     <div
       className={`${
-        signout ? "" : "absolute"
+        signout ? "absolute" : "absolute"
       } z-10 w-full bg-gradient-to-b from-black`}
     >
       <img
-        className={`w-28 ${!signout && "mt-2"} lg:w-52`}
+        className={`w-24 ${!signout && "mt-2"} lg:w-40`}
         src={LOGO_URL}
         alt="logo"
       ></img>
