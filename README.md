@@ -17,6 +17,14 @@
 - unsubscribed to onAuthChange 
 - register for TMDB and API get access token
 - created custom hook for calling the movies api and storeing it in store
+- custom hook for nowplaying movies
+- updated store with movies data
+- created a nowplaying slice
+- fetch data for trailer video
+- update store with trailer video data
+- embeded the youtube video and make it autoplay and mute
+- styled the main container
+
 # features (livewire)
 -login/signup
     -form for signup/sign up form 
