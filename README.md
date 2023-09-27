@@ -24,7 +24,8 @@
 - update store with trailer video data
 - embeded the youtube video and make it autoplay and mute
 - styled the main container
-
+- create all different movieslist actions in slice 
+- created custom hooks for all differnt movies list
 # features (livewire)
 -login/signup
     -form for signup/sign up form 
