@@ -5,7 +5,9 @@ const MovieList = ({ title, movie_list }) => {
   return (
     <div className="p-4 ">
       <h1 className="font-bold text-2xl w-full p-2 pl-8 text-white">{title}</h1>
-      <div className={`flex ${movie_list && "overflow-x-scroll"} `}>
+      <div
+        className={`flex ${movie_list && "overflow-x-scroll no-scrollbar"} `}
+      >
         <div className="flex ">
           {movie_list &&
             movie_list.map((movie) => {
