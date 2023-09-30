@@ -10,6 +10,7 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BKG_IMG_LOGIN } from "../utils/constants";
 
 const Login = () => {
   const [signUp, setSignUp] = useState(false);
@@ -94,8 +95,8 @@ const Login = () => {
       <Header />
       <div className="relative bg-black h-[100vh]">
         <img
-          className="hidden md:block md:bg-contain"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/dc1cf82d-97c9-409f-b7c8-6ac1718946d6/14a8fe85-b6f4-4c06-8eaf-eccf3276d557/IN-en-20230911-popsignuptwoweeks-perspective_alpha_website_small.jpg"
+          className="hidden md:block md:bg-contain overflow-hidden w-full h-full bg-cover"
+          src={BKG_IMG_LOGIN}
           alt="bg-img"
         />
       </div>
@@ -155,7 +156,7 @@ const Login = () => {
           {error.password}
         </span>
         <button
-          className="bg-red-700 w-5/6 p-4 rounded-lg text-xl m-4"
+          className="bg-[#e50914] w-5/6 p-4 rounded-lg text-xl m-4"
           onClick={handleButtonClick}
         >
           {signUp ? "Sign Up" : "Sign In"}

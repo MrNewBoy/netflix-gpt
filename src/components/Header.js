@@ -39,7 +39,7 @@ const Header = ({ signout }) => {
     <div
       className={`${
         signout ? "absolute" : "absolute"
-      } z-10 w-full bg-gradient-to-b from-black`}
+      } z-10 w-full bg-gradient-to-b from-black text-center`}
     >
       <img
         className={`w-24 ${!signout && "mt-2"} lg:w-40`}
@@ -74,7 +74,7 @@ const Header = ({ signout }) => {
           </span>
 
           <button
-            className="bg-red-700 text-white p-2 rounded-lg text-lg m-4"
+            className="bg-[#e50914] text-white px-1 py-2 rounded-sm text-sm m-4"
             onClick={handleSignOut}
           >
             Sign Out{" "}
