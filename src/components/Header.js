@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
-import { LOGO_URL, PROFILE_IMG } from "../utils/constants";
+import { LOGO_URL, PROFILE_IMG, SUPPORTED_LANG } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { addUser, removeUser } from "../utils/userSlice";
+import { toggleGPT } from "../utils/gptSlice";
+import { lang } from "../utils/languageConstants";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = ({ signout }) => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const showGPT = useSelector((store) => store.gptInfo.showGPT);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -26,6 +30,10 @@ const Header = ({ signout }) => {
     return () => unsubscribe();
   }, []);
 
+  const handleGptContainer = () => {
+    dispatch(toggleGPT());
+  };
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -34,6 +42,9 @@ const Header = ({ signout }) => {
       .catch((error) => {
         // An error happened.
       });
+  };
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
   };
   return (
     <div
@@ -47,11 +58,27 @@ const Header = ({ signout }) => {
         alt="logo"
       ></img>
       {signout && (
-        <span className="absolute right-0 top-1">
+        <span className="absolute right-0 top-1 text-white flex-1 mr-5">
+          {showGPT && (
+            <select
+              className="text-white bg-gray-900 mr-3 p-1 rounded-sm "
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANG.map((lang) => (
+                <option key={lang.key} value={lang.key}>
+                  {lang.lang}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            className=" border-2 bg-[#e50914] bg-opacity-90 p-1 rounded-md "
+            onClick={handleGptContainer}
+          >
+            {showGPT ? "BROWSE" : "AI SEARCH"}
+          </button>
           <span>
-            <p className="inline text-lg text-white p-2 ">
-              {user?.displayName}
-            </p>
+            <p className="inline text-lg e p-2 ">{user?.displayName}</p>
             <img
               className="w-8 inline"
               alt="profile-img"
@@ -74,7 +101,7 @@ const Header = ({ signout }) => {
           </span>
 
           <button
-            className="bg-[#e50914] text-white px-1 py-2 rounded-sm text-sm m-4"
+            className="bg-[#e50914] bg-opacity-90   px-1 py-2 rounded-sm text-sm m-4"
             onClick={handleSignOut}
           >
             Sign Out{" "}

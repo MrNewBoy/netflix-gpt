@@ -26,6 +26,12 @@
 - styled the main container
 - create all different movieslist actions in slice 
 - created custom hooks for all differnt movies list
+- GPT search feature
+- created a gpt slice and added it to store
+- gpt search page
+- gpt search bar
+- Multi-Language feature in App
+-Integrate GPT API
 # features (livewire)
 -login/signup
     -form for signup/sign up form 
