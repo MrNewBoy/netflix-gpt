@@ -31,7 +31,8 @@
 - gpt search page
 - gpt search bar
 - Multi-Language feature in App
--Integrate GPT API
+- Integrate GPT API
+- reuse the movielist component in showing gpt movies suggestions
 # features (livewire)
 -login/signup
     -form for signup/sign up form 

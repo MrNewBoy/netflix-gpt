@@ -7,8 +7,7 @@ export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMDc5NmY3MWZlMGM2MTBlMmU0MTMxODYzN2JmMWNlZCIsInN1YiI6IjY1MTFmOWI2MjZkYWMxMDEwYzc2ODUyNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AbMrkRiszoESsj4QJ7sCYJfaHWAUIfOuPl20kMfFYDU",
+    Authorization: `Bearer ${process.env.REACT_APP_TMDB_KEY}`,
   },
 };
 export const MOVIE_CARD_IMG = "https://image.tmdb.org/t/p/w500";
@@ -21,3 +20,5 @@ export const SUPPORTED_LANG = [
   { lang: "Hindi", key: "hindi" },
   { lang: "Spanish", key: "spanish" },
 ];
+
+export const OPEN_AI_KEY = process.env.REACT_APP_OPEN_AI_KEY;
