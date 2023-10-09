@@ -25,70 +25,95 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
 
-  const handleButtonClick = (e) => {
-    e.preventDefault();
+const signInFunc = async (auth, email, password) => {
+  try {
+    const data = await signInWithEmailAndPassword(auth, email, password);
 
-    const isValid =
-      signUp && checkValidData(email.current.value, password.current.value);
+    const user = data.user;
+    console.log(data, user);
+  } catch (e) {}
+};
+const signUpFunc = async (auth, email1, password) => {
+  const res1 = await createUserWithEmailAndPassword(auth, email1, password);
+  const user = res1.user;
+  // const res2 = await updateProfile(res1, { displayName: fullname });
+  console.log(auth, user);
+  // console.log(res2);
+  // const { uid, email, displayName } = res2.user;
+  // dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+};
+const handleButtonClick = (e) => {
+  e.preventDefault();
 
-    if ("Email ID is not valid" === isValid) {
-      setError({ ...error, email: isValid });
-    } else if ("Password not valid" === isValid) {
-      setError({ ...error, password: isValid });
-    } else if (isValid === null) {
-      setError({ email: null, password: null });
-    }
+  const isValid =
+    signUp && checkValidData(email.current.value, password.current.value);
 
-    if (isValid) return;
+  if ("Email ID is not valid" === isValid) {
+    setError({ ...error, email: isValid });
+  } else if ("Password not valid" === isValid) {
+    setError({ ...error, password: isValid });
+  } else if (isValid === null) {
+    setError({ email: null, password: null });
+  }
 
-    if (signUp) {
-      //SignUp logic
-      createUserWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          updateProfile(user, {
-            displayName: fullname.current.value,
-          })
-            .then(() => {
-              // Profile updated!
-              const { uid, email, displayName } = user;
-              dispatch(
-                addUser({ uid: uid, email: email, displayName: displayName })
-              );
-            })
-            .catch((error) => {
-              // An error occurred
-            });
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-          setError({ ...error, auth: errorMessage + "-" + errorCode });
-        });
-    } else {
-      //sign in logic
-      signInWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setError({ ...error, auth: errorMessage + "-" + errorCode });
-        });
-    }
-  };
+  if (isValid) return;
+
+  if (signUp) {
+    //SignUp logic
+    signUpFunc(
+      auth,
+      email.current.value,
+      password.current.value,
+      fullname.current.value
+    );
+    // createUserWithEmailAndPassword(
+    //   auth,
+    //   email.current.value,
+    //   password.current.value
+    // )
+    //   .then((userCredential) => {
+    //     // Signed in
+    //     const user = userCredential.user;
+    //     console.log(user);
+    //     // updateProfile(user, {
+    //     //   displayName: fullname.current.value,
+    //     // })
+    //     //   .then(() => {
+    //     //     // Profile updated!
+    //     //     const { uid, email, displayName } = user;
+    //     //     dispatch(
+    //     //       addUser({ uid: uid, email: email, displayName: displayName })
+    //     //     );
+    //     //   })
+    //     //   .catch((error) => {
+    //     //     // An error occurred
+    //     //   });
+    //   })
+    //   .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     // ..
+    //     setError({ ...error, auth: errorMessage + "-" + errorCode });
+    //   });
+  } else {
+    //sign in logic
+    signInFunc(auth, email.current.value, password.current.value);
+    // signInWithEmailAndPassword(
+    //   auth,
+    //   email.current.value,
+    //   password.current.value
+    // )
+    //   .then((userCredential) => {
+    //     // Signed in
+    //     const user = userCredential.user;
+    //   })
+    //   .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     setError({ ...error, auth: errorMessage + "-" + errorCode });
+    //   });
+  }
+};
 
   return (
     <div className="font-poppins">

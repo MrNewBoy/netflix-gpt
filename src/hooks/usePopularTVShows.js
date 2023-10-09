@@ -15,7 +15,7 @@ const usePopularTVShows = () => {
     dispatch(addPopularTVShows(data.results));
   };
   useEffect(() => {
-    popularTVShows && getMovies();
+    !popularTVShows && getMovies();
   }, []);
 };
 
