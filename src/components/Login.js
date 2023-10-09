@@ -60,41 +60,41 @@ const handleButtonClick = (e) => {
 
   if (signUp) {
     //SignUp logic
-    signUpFunc(
-      auth,
-      email.current.value,
-      password.current.value,
-      fullname.current.value
-    );
-    // createUserWithEmailAndPassword(
+    // signUpFunc(
     //   auth,
     //   email.current.value,
-    //   password.current.value
-    // )
-    //   .then((userCredential) => {
-    //     // Signed in
-    //     const user = userCredential.user;
-    //     console.log(user);
-    //     // updateProfile(user, {
-    //     //   displayName: fullname.current.value,
-    //     // })
-    //     //   .then(() => {
-    //     //     // Profile updated!
-    //     //     const { uid, email, displayName } = user;
-    //     //     dispatch(
-    //     //       addUser({ uid: uid, email: email, displayName: displayName })
-    //     //     );
-    //     //   })
-    //     //   .catch((error) => {
-    //     //     // An error occurred
-    //     //   });
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     // ..
-    //     setError({ ...error, auth: errorMessage + "-" + errorCode });
-    //   });
+    //   password.current.value,
+    //   fullname.current.value
+    // );
+    createUserWithEmailAndPassword(
+      auth,
+      email.current.value,
+      password.current.value
+    )
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        updateProfile(user, {
+          displayName: fullname.current.value,
+        })
+          .then(() => {
+            // Profile updated!
+            const { uid, email, displayName } = user;
+            dispatch(
+              addUser({ uid: uid, email: email, displayName: displayName })
+            );
+          })
+          .catch((error) => {
+            // An error occurred
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+        setError({ ...error, auth: errorMessage + "-" + errorCode });
+      });
   } else {
     //sign in logic
     signInFunc(auth, email.current.value, password.current.value);
