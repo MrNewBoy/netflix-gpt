@@ -97,21 +97,21 @@ const handleButtonClick = (e) => {
       });
   } else {
     //sign in logic
-    signInFunc(auth, email.current.value, password.current.value);
-    // signInWithEmailAndPassword(
-    //   auth,
-    //   email.current.value,
-    //   password.current.value
-    // )
-    //   .then((userCredential) => {
-    //     // Signed in
-    //     const user = userCredential.user;
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     setError({ ...error, auth: errorMessage + "-" + errorCode });
-    //   });
+    // signInFunc(auth, email.current.value, password.current.value);
+    signInWithEmailAndPassword(
+      auth,
+      email.current.value,
+      password.current.value
+    )
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setError({ ...error, auth: errorMessage + "-" + errorCode });
+      });
   }
 };
 
